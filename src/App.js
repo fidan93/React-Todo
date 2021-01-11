@@ -5,12 +5,12 @@ import TodoForm from "./components/TodoForm";
 const todos = [
   {
     task: 'Cook meal',
-    id: 1528817077286,
+    id: 0,
     completed: false
   },
   {
     task: 'Bake Cookies',
-    id: 1528817084358,
+    id: 1,
     completed: false
   }
   ,
@@ -60,12 +60,29 @@ this.setState({
       })
     })
   }
+  handleSearch = (input)=>{
+    if(input === ""){
+      this.setState({todos})
+    }
+    else{
+    console.log(input)
+    const newSearch=this.state.todos.filter(task=>{
+      console.log(task)
+      return task.task.includes(input)
+    })
+  
+    console.log(newSearch)
+    this.setState({
+      todos: newSearch
+    })
+  }
+  }
 
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoForm handleAdd={this.handleAdd}/>
+        <TodoForm handleAdd={this.handleAdd} handleSearch={this.handleSearch}/>
         <TodoList todos = {this.state.todos} handleToggle = {this.handleToggle} handleCompleted={this.handleCompleted}/>
       </div>
     );

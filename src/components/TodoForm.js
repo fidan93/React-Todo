@@ -5,29 +5,48 @@ class TodoForm extends React.Component {
     constructor(){
       super();
       this.state = {
-          textInput: ""
+          add: "",
+          search: ""
       }
     }
 
     handleChange= (e) =>{
-     this.setState({textInput: e.target.value})
+        const{name,value}=e.target;
+        if(e.target.name === "search"){this.props.handleSearch(e.target.value)}
+        this.setState({...this.state,[name]: value}) 
     }
 
     handleSubmit = (e) => {
      e.preventDefault();
-     this.props.handleAdd(this.state.textInput);
-     this.setState({ textInput:""});
+     this.props.handleAdd(this.state.add);
+     this.setState({ add:""});
+    }
+
+    search = (e) => {
+      
+        this.props.handleSearch(this.state.search)
     }
 
     render(){
-        return (
+
+    //console.log(this.state.search)
+        return (<>
             <form onSubmit ={this.handleSubmit}>
                 <label>
                     Enter Task:
-                    <input type="text" onChange={this.handleChange} value = {this.state.textInput }></input>
-                    <button>Add</button>
+                    <input type="text" name="add" onChange={this.handleChange} value = {this.state.add }></input>
+                    
                 </label>
+                <button>Add</button>
+                <br/>
+              
             </form>
+              <label>
+              Search Task:
+              <input type="text" name ="search" onChange={this.handleChange} value = {this.state.search }></input>
+              
+          </label>
+          <button onClick={this.search}>Search</button></>
         )
     }
 }
